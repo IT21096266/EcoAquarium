@@ -5,13 +5,13 @@ import { getAuth } from 'firebase/auth';
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCdXEutBrquc63lAUPkhcmnV2yscw0K1mE",
-    authDomain: "mern-test01.firebaseapp.com",
-    databaseURL: "https://mern-test01-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "mern-test01",
-    storageBucket: "mern-test01.appspot.com",
-    messagingSenderId: "862288082458",
-    appId: "1:862288082458:web:33892dc429b315b4a543a3",
+    apiKey: "AIzaSyB1rmcRY5JYwfU1tBk91m3y6T9LSg5zVmk",
+    authDomain: "ecoaquarium-edce8.firebaseapp.com",
+    databaseURL: "https://ecoaquarium-edce8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "ecoaquarium-edce8",
+    storageBucket: "ecoaquarium-edce8.appspot.com",
+    messagingSenderId: "873471183232",
+    appId: "1:873471183232:web:97d47f05014ac8c6345965"
 };
 
 const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig)   // This will check is the app is initialized 
