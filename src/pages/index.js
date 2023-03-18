@@ -1,0 +1,1 @@
+export {default as DiseaseList} from '../pages/DiseaseList'
