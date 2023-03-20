@@ -1,8 +1,7 @@
 import React from 'react'
 import { Routes, Route } from "react-router-dom";
 
-import { DiseaseList, AddDisease } from '../../pages'
-import { AddTreatment, DiseaseList } from '../../pages'
+import { DiseaseList, AddDisease, AddTreatment } from '../../pages'
 
 import { MainContainer } from '../index'
 
