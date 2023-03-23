@@ -8,9 +8,11 @@ import {deleteObject, getDownloadURL, ref, uploadBytesResumable} from "firebase/
 import { storage } from "../services/firebase-config";
 import DiseaseDataService from "../services/disease-services";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const AddDisease = () => {
+
+    const navigate = useNavigate();
 
     const { diseaseID } = useParams();
     const [diseaseName, setDiseaseName] = useState("");
@@ -128,7 +130,7 @@ const AddDisease = () => {
         <main className="mt-1 p-12 w-full ">
             <div className={`bg-primary ${styles.flexStart}`}>
                 <div className={`${styles.boxWidth}`}>
-                    <Helmet title="Disease List">
+                    <Helmet title="New Disease">
             
         {/*-------------- Messages -------------*/}
                     {fields && (
@@ -154,7 +156,7 @@ const AddDisease = () => {
                                     Disease Form
                                 </h3>
                                 <p className="mt-1 text-sm text-black">
-                                    Add disease name the discription of the disease
+                                    Add disease name and the discription of the disease
                                 </p>
                                 </div>
                             </div>
