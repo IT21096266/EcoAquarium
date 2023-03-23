@@ -130,7 +130,7 @@ const DiseaseUpdate = () => {
                 <div className={`${styles.boxWidth}`}>
                     <Helmet title="Update Disease">
             
-        {/*-------------- Messages -------------*/}
+    {/*--------------- Messages --------------*/}
                     {fields && (
                                     <motion.p
                                     initial={{ opacity: 0 }}
