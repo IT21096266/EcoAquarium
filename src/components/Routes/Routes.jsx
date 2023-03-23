@@ -13,7 +13,7 @@ const AppRoutes = () => {
       <Route path="/diseaseList" element={<DiseaseList />} />
       <Route path="/diseaseUpdate" element={<DiseaseUpdate />} />
       <Route path="/addDisease" element={<AddDisease />} />
-      <Route path="/diseaseList/DiseaseUpdate/:diseaseID" element={<DiseaseList />} />
+      <Route path="/diseaseList/diseaseUpdate/:diseaseID" element={<DiseaseUpdate />} />
       <Route path='/addtreatment' element={<AddTreatment/> }/>
       <Route path="/create" element={<Create />} />
       <Route path="/upload" element={<Upload />} />
