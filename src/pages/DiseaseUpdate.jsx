@@ -1,4 +1,3 @@
-import React, { useEffect, useRef  } from "react";
 import styles from "../Styles/styles";
 import Helmet from "../components/Helmet/Helmet";
 import Loader from "../components/UI/Loader";
@@ -7,12 +6,11 @@ import { motion } from "framer-motion";
 import {deleteObject, getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import { storage } from "../services/firebase-config";
 import DiseaseDataService from "../services/disease-services";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const DiseaseUpdate = () => {
 
-    const { diseaseID } = useParams();
     const [diseaseName, setDiseaseName] = useState("");
     const [diseaseCauses, setDiseaseCauses] = useState("");
     const [diseasePrevention, setDiseasePrevention] = useState("");
@@ -23,6 +21,8 @@ const DiseaseUpdate = () => {
     const [msg, setMsg] = useState(null);
     const [alertStatus, setAlertStatus] = useState("danger");
     const [message, setMessage] = useState({ error: false, msg: "" });
+
+    const navigate = useNavigate();
 
     const uploadImage = (e) => {
         setLoading(true);
@@ -61,7 +61,7 @@ const DiseaseUpdate = () => {
         );
       };
 
-      const deleteImage = () => {
+    const deleteImage = () => {
         setLoading(true);
         const deleteRef = ref(storage, imageAsset);
         deleteObject(deleteRef).then(() => {
@@ -76,7 +76,6 @@ const DiseaseUpdate = () => {
         });
       };
 
-
     const handleSubmit = async (e) => {
       e.preventDefault();
       const newDisease = {
@@ -89,8 +88,9 @@ const DiseaseUpdate = () => {
       };
       console.log(newDisease);
       try {
-        await DiseaseDataService.addDisease(newDisease);
-        alert("Disease added successfully!");
+        if (diseaseID !== undefined && diseaseID !== "") {
+        await DiseaseDataService.updateDisease(diseaseID, newDisease);
+        alert("Disease Update successfully!");
           setLoading(false);
           setFields(true);
           setTimeout(() => {
@@ -101,11 +101,15 @@ const DiseaseUpdate = () => {
             setDiseaseTreatment("");
             setImageAsset(null);
           }, 5000);
+        } else {
+            alert("Disease Update FAILED!");
+            navigate("/diseaseList");
+        }
         navigate("/diseaseList");
       } catch (err) {
         setMessage({ error: false, msg: err.message });
       }
-    };
+      };
 
     const resetForm = () => {
         setDiseaseName("")
@@ -122,6 +126,31 @@ const DiseaseUpdate = () => {
           }, 5000);
         });
     }
+
+  // -----------------------------------------------   Fetch data from firestore to update        -----------------------------------
+  
+    const { diseaseID } = useParams();
+    console.log("Disease ID: ", diseaseID);
+    
+    const editHandler = async () => {
+      setMessage("");
+      try {
+        const docSnap = await DiseaseDataService.getDisease(diseaseID);
+        console.log("Got the Data: ", docSnap.data());
+        setDiseaseName(docSnap.data().diseaseName);
+        setDiseaseCauses(docSnap.data().diseaseCauses);
+        setDiseasePrevention(docSnap.data().diseasePrevention);
+        setDiseaseTreatment(docSnap.data().diseaseTreatment);
+        setImageAsset(docSnap.data().imageAsset);
+      } catch {}
+    };
+    useEffect(() => {
+      console.log("Got ID: ", diseaseID);
+      if (diseaseID !== undefined && diseaseID !== "") {
+        editHandler();
+        console.log("Check ", diseaseID);
+      }
+    }, [diseaseID]);
 
   return (
         <div className="bg-primary w-full overflow-hidden">
@@ -154,7 +183,7 @@ const DiseaseUpdate = () => {
                                     Disease Form
                                 </h3>
                                 <p className="mt-1 text-sm text-black">
-                                    Add disease name the discription of the disease
+                                    Update disease name and the discription of the disease
                                 </p>
                                 </div>
                             </div>
@@ -305,7 +334,7 @@ const DiseaseUpdate = () => {
                                             type="submit"
                                             className={`${styles.ALbtn} font-semibold `}
                                             >
-                                            Save
+                                            Update
                                             </button>
                                         </div>
                                         </div>
