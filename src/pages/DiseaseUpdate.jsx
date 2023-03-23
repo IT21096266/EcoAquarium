@@ -12,6 +12,7 @@ import { useParams, useNavigate } from "react-router-dom";
 const DiseaseUpdate = () => {
 
     const [diseaseName, setDiseaseName] = useState("");
+    const [diseaseDescription, setDescription] = useState("");
     const [diseaseCauses, setDiseaseCauses] = useState("");
     const [diseasePrevention, setDiseasePrevention] = useState("");
     const [diseaseTreatment, setDiseaseTreatment] = useState("");
@@ -81,6 +82,7 @@ const DiseaseUpdate = () => {
       const newDisease = {
         id: `${Date.now()}`,
         diseaseName,
+        diseaseDescription,
         diseaseCauses,
         diseasePrevention,
         diseaseTreatment,
@@ -95,10 +97,6 @@ const DiseaseUpdate = () => {
           setFields(true);
           setTimeout(() => {
             setFields(false);
-            setDiseaseName("");
-            setDiseaseCauses("");
-            setDiseasePrevention("");
-            setDiseaseTreatment("");
             setImageAsset(null);
           }, 5000);
         } else {
@@ -113,6 +111,7 @@ const DiseaseUpdate = () => {
 
     const resetForm = () => {
         setDiseaseName("")
+        setDescription("")
         setDiseaseCauses("")
         setDiseasePrevention("")
         setDiseaseTreatment("")
@@ -128,7 +127,7 @@ const DiseaseUpdate = () => {
     }
 
   // -----------------------------------------------   Fetch data from firestore to update        -----------------------------------
-  
+
     const { diseaseID } = useParams();
     console.log("Disease ID: ", diseaseID);
     
@@ -138,6 +137,7 @@ const DiseaseUpdate = () => {
         const docSnap = await DiseaseDataService.getDisease(diseaseID);
         console.log("Got the Data: ", docSnap.data());
         setDiseaseName(docSnap.data().diseaseName);
+        setDescription(docSnap.data().diseaseDescription)
         setDiseaseCauses(docSnap.data().diseaseCauses);
         setDiseasePrevention(docSnap.data().diseasePrevention);
         setDiseaseTreatment(docSnap.data().diseaseTreatment);
@@ -205,7 +205,7 @@ const DiseaseUpdate = () => {
                                                 type="text"
                                                 name="disease_name"
                                                 id="disease_name"
-                                                maxLength="10"
+                                                maxLength="30"
                                                 defaultValue={diseaseName}
                                                 onSelect={(e) => {
                                                     setDiseaseName(e.target.value);
@@ -216,14 +216,32 @@ const DiseaseUpdate = () => {
                                             </div>
 
                                             <div className="col-span-6 sm:col-span-5">
+                                            <label htmlFor="disease_description" className="formLable">
+                                                Describe the disease
+                                            </label>
+                                            <textarea
+                                                type="text"
+                                                name="disease_description"
+                                                id="disease_description"
+                                                maxLength="300"
+                                                defaultValue={diseaseDescription}
+                                                onSelect={(e) => {
+                                                    setDescription(e.target.value);
+                                                }}
+                                                required
+                                                className={`${styles.TXTar}`}>
+                                            </textarea>
+                                            </div>
+
+                                            <div className="col-span-6 sm:col-span-5">
                                             <label htmlFor="last_name" className="formLable">
-                                                Disease Causes
+                                                Causes of Disease
                                             </label>
                                             <textarea
                                                 type="text"
                                                 name="disease_causes"
                                                 id="disease_causes"
-                                                maxLength="15"
+                                                // maxLength=""
                                                 defaultValue={diseaseCauses}
                                                 onSelect={(e) => {
                                                     setDiseaseCauses(e.target.value);
@@ -253,13 +271,13 @@ const DiseaseUpdate = () => {
 
                                             <div className="col-span-6 sm:col-span-3 lg:col-span-5">
                                             <label htmlFor="disease_treatment" className="formLable">
-                                                Disease Treatment
+                                                Treatment for the disease
                                             </label>
                                             <textarea
                                                 type="text"
                                                 name="disease_treatment"
                                                 id="disease_treatment"
-                                                maxLength="15"
+                                                // maxLength="15"
                                                 defaultValue={diseaseTreatment}
                                                 onSelect={(e) => {
                                                     setDiseaseTreatment(e.target.value);

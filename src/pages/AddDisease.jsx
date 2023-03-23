@@ -16,6 +16,7 @@ const AddDisease = () => {
 
     const { diseaseID } = useParams();
     const [diseaseName, setDiseaseName] = useState("");
+    const [diseaseDescription, setDescription] = useState("");
     const [diseaseCauses, setDiseaseCauses] = useState("");
     const [diseasePrevention, setDiseasePrevention] = useState("");
     const [diseaseTreatment, setDiseaseTreatment] = useState("");
@@ -84,6 +85,7 @@ const AddDisease = () => {
       const newDisease = {
         id: `${Date.now()}`,
         diseaseName,
+        diseaseDescription,
         diseaseCauses,
         diseasePrevention,
         diseaseTreatment,
@@ -97,10 +99,6 @@ const AddDisease = () => {
           setFields(true);
           setTimeout(() => {
             setFields(false);
-            setDiseaseName("");
-            setDiseaseCauses("");
-            setDiseasePrevention("");
-            setDiseaseTreatment("");
             setImageAsset(null);
           }, 5000);
         navigate("/diseaseList");
@@ -111,6 +109,7 @@ const AddDisease = () => {
 
     const resetForm = () => {
         setDiseaseName("")
+        setDescription("")
         setDiseaseCauses("")
         setDiseasePrevention("")
         setDiseaseTreatment("")
@@ -178,7 +177,7 @@ const AddDisease = () => {
                                                 type="text"
                                                 name="disease_name"
                                                 id="disease_name"
-                                                maxLength="10"
+                                                maxLength="30"
                                                 defaultValue={diseaseName}
                                                 onSelect={(e) => {
                                                     setDiseaseName(e.target.value);
@@ -189,14 +188,32 @@ const AddDisease = () => {
                                             </div>
 
                                             <div className="col-span-6 sm:col-span-5">
-                                            <label htmlFor="last_name" className="formLable">
-                                                Disease Causes
+                                            <label htmlFor="disease_description" className="formLable">
+                                                Describe the disease
+                                            </label>
+                                            <textarea
+                                                type="text"
+                                                name="disease_description"
+                                                id="disease_description"
+                                                maxLength="300"
+                                                defaultValue={diseaseDescription}
+                                                onSelect={(e) => {
+                                                    setDescription(e.target.value);
+                                                }}
+                                                required
+                                                className={`${styles.TXTar}`}>
+                                            </textarea>
+                                            </div>
+
+                                            <div className="col-span-6 sm:col-span-5">
+                                            <label htmlFor="disease_sauses" className="formLable">
+                                                Causes of Disease
                                             </label>
                                             <textarea
                                                 type="text"
                                                 name="disease_causes"
                                                 id="disease_causes"
-                                                maxLength="15"
+                                                // maxLength="15"
                                                 defaultValue={diseaseCauses}
                                                 onSelect={(e) => {
                                                     setDiseaseCauses(e.target.value);
@@ -226,13 +243,13 @@ const AddDisease = () => {
 
                                             <div className="col-span-6 sm:col-span-3 lg:col-span-5">
                                             <label htmlFor="disease_treatment" className="formLable">
-                                                Disease Treatment
+                                                Treatment for the disease
                                             </label>
                                             <textarea
                                                 type="text"
                                                 name="disease_treatment"
                                                 id="disease_treatment"
-                                                maxLength="15"
+                                                // maxLength="15"
                                                 defaultValue={diseaseTreatment}
                                                 onSelect={(e) => {
                                                     setDiseaseTreatment(e.target.value);
