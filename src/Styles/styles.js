@@ -36,8 +36,9 @@ const styles = {
     formLable: "block text-sm font-medium text-gray-700",
 
 // Address Update, Add Form
-    ADtxt: "mt-1 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md h-8 box-border hover:box-content hover:bg-slate-100 duration-500 ",
-    
+    ADtxt: "mt-1 block w-full shadow-sm sm:text-sm border border-solid border-gray-300 rounded-md resize-none rounded-md h-10 box-border hover:bg-slate-100 duration-500 ",
+    TXTar: "ml-1 w-[800px] h-[100px] bg-transparent placeholder:text-gray-800 form-control block px-3 py-1.5 border border-solid border-gray-300 rounded-md resize-none hover:bg-slate-100 duration-500",
+
 // Address List
     ALtable: "w-full text-sm text-center text-gray-500 dark:text-gray-400 table-fixed mt-4 mb-4",
     ALthread: "text-xs",
