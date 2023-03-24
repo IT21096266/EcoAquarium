@@ -1,4 +1,4 @@
-import React, { useEffect, useRef  } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "../Styles/styles";
 import Helmet from "../components/Helmet/Helmet";
 import Loader from "../components/UI/Loader";
@@ -338,7 +338,7 @@ const AddDisease = () => {
             </div>
         </main>
     </div>
-  )
-}
+  );
+};
 
-export default AddDisease
+export default AddDisease;
