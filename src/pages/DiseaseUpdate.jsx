@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from "react";
 import styles from "../Styles/styles";
 import Helmet from "../components/Helmet/Helmet";
 import Loader from "../components/UI/Loader";
@@ -7,14 +6,11 @@ import { motion } from "framer-motion";
 import {deleteObject, getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import { storage } from "../services/firebase-config";
 import DiseaseDataService from "../services/disease-services";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const AddDisease = () => {
+const DiseaseUpdate = () => {
 
-    const navigate = useNavigate();
-
-    const { diseaseID } = useParams();
     const [diseaseName, setDiseaseName] = useState("");
     const [diseaseDescription, setDescription] = useState("");
     const [diseaseCauses, setDiseaseCauses] = useState("");
@@ -26,7 +22,9 @@ const AddDisease = () => {
     const [msg, setMsg] = useState(null);
     const [alertStatus, setAlertStatus] = useState("danger");
     const [message, setMessage] = useState({ error: false, msg: "" });
-    
+
+    const navigate = useNavigate();
+
     const uploadImage = (e) => {
         setLoading(true);
         const imageFile = e.target.files[0];
@@ -64,7 +62,7 @@ const AddDisease = () => {
         );
       };
 
-      const deleteImage = () => {
+    const deleteImage = () => {
         setLoading(true);
         const deleteRef = ref(storage, imageAsset);
         deleteObject(deleteRef).then(() => {
@@ -79,7 +77,6 @@ const AddDisease = () => {
         });
       };
 
-
     const handleSubmit = async (e) => {
       e.preventDefault();
       const newDisease = {
@@ -93,19 +90,24 @@ const AddDisease = () => {
       };
       console.log(newDisease);
       try {
-        await DiseaseDataService.addDisease(newDisease);
-        alert("Disease added successfully!");
+        if (diseaseID !== undefined && diseaseID !== "") {
+        await DiseaseDataService.updateDisease(diseaseID, newDisease);
+        alert("Disease Update successfully!");
           setLoading(false);
           setFields(true);
           setTimeout(() => {
             setFields(false);
             setImageAsset(null);
           }, 5000);
+        } else {
+            alert("Disease Update FAILED!");
+            navigate("/diseaseList");
+        }
         navigate("/diseaseList");
       } catch (err) {
         setMessage({ error: false, msg: err.message });
       }
-    };
+      };
 
     const resetForm = () => {
         setDiseaseName("")
@@ -124,14 +126,40 @@ const AddDisease = () => {
         });
     }
 
+  // -----------------------------------------------   Fetch data from firestore to update        -----------------------------------
+
+    const { diseaseID } = useParams();
+    console.log("Disease ID: ", diseaseID);
+    
+    const editHandler = async () => {
+      setMessage("");
+      try {
+        const docSnap = await DiseaseDataService.getDisease(diseaseID);
+        console.log("Got the Data: ", docSnap.data());
+        setDiseaseName(docSnap.data().diseaseName);
+        setDescription(docSnap.data().diseaseDescription)
+        setDiseaseCauses(docSnap.data().diseaseCauses);
+        setDiseasePrevention(docSnap.data().diseasePrevention);
+        setDiseaseTreatment(docSnap.data().diseaseTreatment);
+        setImageAsset(docSnap.data().imageAsset);
+      } catch {}
+    };
+    useEffect(() => {
+      console.log("Got ID: ", diseaseID);
+      if (diseaseID !== undefined && diseaseID !== "") {
+        editHandler();
+        console.log("Check ", diseaseID);
+      }
+    }, [diseaseID]);
+
   return (
-    <div className="bg-primary w-full overflow-hidden">
+        <div className="bg-primary w-full overflow-hidden">
         <main className="mt-1 p-12 w-full ">
             <div className={`bg-primary ${styles.flexStart}`}>
                 <div className={`${styles.boxWidth}`}>
-                    <Helmet title="New Disease">
+                    <Helmet title="Update Disease">
             
-        {/*-------------- Messages -------------*/}
+    {/*--------------- Messages --------------*/}
                     {fields && (
                                     <motion.p
                                     initial={{ opacity: 0 }}
@@ -155,7 +183,7 @@ const AddDisease = () => {
                                     Disease Form
                                 </h3>
                                 <p className="mt-1 text-sm text-black">
-                                    Add disease name and the discription of the disease
+                                    Update disease name and the discription of the disease
                                 </p>
                                 </div>
                             </div>
@@ -206,14 +234,14 @@ const AddDisease = () => {
                                             </div>
 
                                             <div className="col-span-6 sm:col-span-5">
-                                            <label htmlFor="disease_sauses" className="formLable">
+                                            <label htmlFor="last_name" className="formLable">
                                                 Causes of Disease
                                             </label>
                                             <textarea
                                                 type="text"
                                                 name="disease_causes"
                                                 id="disease_causes"
-                                                // maxLength="15"
+                                                // maxLength=""
                                                 defaultValue={diseaseCauses}
                                                 onSelect={(e) => {
                                                     setDiseaseCauses(e.target.value);
@@ -324,7 +352,7 @@ const AddDisease = () => {
                                             type="submit"
                                             className={`${styles.ALbtn} font-semibold `}
                                             >
-                                            Save
+                                            Update
                                             </button>
                                         </div>
                                         </div>
@@ -338,7 +366,7 @@ const AddDisease = () => {
             </div>
         </main>
     </div>
-  );
-};
+  )
+}
 
-export default AddDisease;
+export default DiseaseUpdate
