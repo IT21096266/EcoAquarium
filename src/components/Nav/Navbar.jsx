@@ -100,14 +100,14 @@ const Navbar = () => {
                         className='p-3 bg-black-gradient text-white text-[12px] absolute top-15 right-10 mx-1 my-2 min-w-[110px] rounded-xl'>
 
         {/* For Admin */}
-                          {users && users.email === "it21096266@my.sliit.lk" && (
+                          {/* {users && users.email === "it21096266@my.sliit.lk" && (
                             <Link to="/onlineItemList">
                                 <p onClick={() => setIsMenu(false)}
                                  className='px-4 py-2 flex items-center gap-1 cursor-pointer hover: text-dimWhite transition-all duration-100 ease-in-out'>
                                   Add Items <MdAdd />
                                 </p>
                             </Link>
-                            )}
+                            )} */}
         {/* For All */}
                             <Link to="/home">
                               <p onClick={() => setIsMenu(false)}

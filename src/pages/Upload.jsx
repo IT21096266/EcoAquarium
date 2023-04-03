@@ -31,7 +31,7 @@ const Upload = () => {
     event.preventDefault();
     console.log("Text: ", text);
     console.log("Images: ", images);
-    // Here you can send the data to the server
+    // send the data to the server
   };
 
   return (
