@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { DiseaseList, AddDisease, DiseaseUpdate, AddTreatment, Create, Upload, ViewPosts,TreatmentList } from '../../pages'
+import { DiseaseList, AddDisease, DiseaseUpdate, AddTreatment, Create, Upload, ViewPosts,TreatmentList,TreatmentUpdate } from '../../pages'
 
 import { MainContainer } from "../index";
 
@@ -14,6 +14,8 @@ const AppRoutes = () => {
       <Route path="/addDisease" element={<AddDisease />} />
       <Route path="/diseaseList/diseaseUpdate/:diseaseID" element={<DiseaseUpdate />} />
       <Route path='/addtreatment' element={<AddTreatment/> }/>
+      <Route path="/treatmentupdate" element={<AddDisease />} />
+      <Route path="/treatmentlist/treatmentupdate/:treatID" element={<TreatmentUpdate />} />
       <Route path="/create" element={<Create />} />
       <Route path="/upload" element={<Upload />} />
       <Route path="/viewposts" element={<ViewPosts />} />  
