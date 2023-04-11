@@ -1,5 +1,4 @@
 import { firestore } from "./firebase-config";
-
 import {
   collection,
   doc,
@@ -25,7 +24,7 @@ class treatment_data_services {
   };
 
   // to DELETE data
-  deleteTreatment = (id, deleteTreatment) => {
+  deleteTreatment = (id) => {
     const treatmentDoc = doc(firestore, "Treatment", id);
     return deleteDoc(treatmentDoc);
   };
