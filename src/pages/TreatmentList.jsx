@@ -25,14 +25,15 @@ const TreatmentList = () => {
   //Delete Treatment
   const deleteHandler = async (id) => {
     await treatment_data_services.deleteTreatment(id);
-    const deleteRef = ref(storage, imageAsset);
-    deleteRef.delete().then(() => {
-      console.log('Treatment deleted successfully');
-      getTreatment();
-    }).catch((error) => {
-      console.log('Error deleting image:', error);
-    });
+    // const deleteRef = ref(storage, imageAsset);
+    // deleteRef.delete().then(() => {
+    //   window.alert('Treatment deleted successfully');
+    //   getTreatment();
+    // }).catch((error) => {
+    //   console.log('Error deleting image:', error);
+    // });
     getTreatment();
+    alert("You still want delete this?")
   };
 
   // navigate to addtreatment
