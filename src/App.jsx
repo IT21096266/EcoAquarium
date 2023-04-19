@@ -1,33 +1,19 @@
-import React, { useEffect } from 'react'
-import { Navbar, Footer } from './components'
-import { AnimatePresence } from 'framer-motion'
-import AppRoutes from "./components/Routes/Routes";
-import { useStateValue } from './context/StateProvider';
-import { getAllItems } from './utils/firebaseFunctions';
-import { actionType } from './context/reducer';
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-const App = () => {
+import Calculator from "./pages/Calculator";
 
-  const [ {onlineItems }, dispatch] = useStateValue()
-  const fetchData = async () =>{
-    await getAllItems().then(data => {
-      dispatch({
-        type : actionType.SET_ONLINE_ITEM,
-        onlineItems : data
-      })
-    })
-  }
-  useEffect(() => { fetchData() }, [])
-
-  return (
-      <AnimatePresence>
-        <div className='bg-primary overflow-hidden text-black'>
-            <Navbar />
-              <AppRoutes />
-            <Footer />
-        </div>
-      </AnimatePresence>
-    )
+function App() {
+	return (
+		<div className="App">
+			<Router>
+				<Routes>
+					<Route path={`/`} element={<Calculator />} />
+				</Routes>
+			</Router>
+		</div>
+	);
 }
 
-export default App
+export default App;
