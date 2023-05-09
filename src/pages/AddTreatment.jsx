@@ -267,18 +267,19 @@ const AddTreatment = () => {
                         </div>
                         <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                           <div className="text-right grid grid-cols-7 gap-4 content-center ...">
+                          <button
+                              type="submit"
+                              className={`${styles.ALbtn} font-semibold `}
+                            >
+                              Save
+                            </button>
                             <input
                               type="reset"
                               className={`${styles.ALbtn} font-semibold `}
                               value="Reset"
                               onClick={() => resetForm()}
                             />
-                            <button
-                              type="submit"
-                              className={`${styles.ALbtn} font-semibold `}
-                            >
-                              Save
-                            </button>
+                            
                           </div>
                         </div>
                       </div>

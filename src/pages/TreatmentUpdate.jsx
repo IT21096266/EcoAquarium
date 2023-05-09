@@ -3,14 +3,18 @@ import Helmet from "../components/Helmet/Helmet";
 import Loader from "../components/UI/Loader";
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { motion } from "framer-motion";
-import {deleteObject, getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { storage } from "../services/firebase-config";
 import treatment_data_services from "../services/treatment_services";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const TreatmentUpdate = () => {
-
   const [product_name, setProduct_name] = useState("");
   const [description, setDescription] = useState("");
   const [fields, setFields] = useState(false);
@@ -20,167 +24,169 @@ const TreatmentUpdate = () => {
   const [alertStatus, setAlertStatus] = useState("danger");
   const [message, setMessage] = useState({ error: false, msg: "" });
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const uploadImage = (e) => {
-        setLoading(true);
-        const imageFile = e.target.files[0];
-        const storageRef = ref(storage, `Images/TreatmentImg/${Date.now()}-${imageFile.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, imageFile);
-    
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const uploadProgress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          },
-          (error) => {
-            console.log(error);
-            setFields(true);
-            setMsg("Error while uploading : Try Again");
-            setAlertStatus("danger");
-            setTimeout(() => {
-              setFields(false);
-              setLoading(false);
-            }, 5000);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              setImageAsset(downloadURL);
-              setLoading(false);
-              setFields(true);
-              setMsg("Image Uploaded Successfully");
-              setAlertStatus("success");
-              setTimeout(() => {
-                setFields(false);
-              }, 5000);
-            });
-          }
-        );
-      };
+  const uploadImage = (e) => {
+    setLoading(true);
+    const imageFile = e.target.files[0];
+    const storageRef = ref(
+      storage,
+      `Images/TreatmentImg/${Date.now()}-${imageFile.name}`
+    );
+    const uploadTask = uploadBytesResumable(storageRef, imageFile);
 
-    const deleteImage = () => {
-        setLoading(true);
-        const deleteRef = ref(storage, imageAsset);
-        deleteObject(deleteRef).then(() => {
-          setImageAsset(null);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const uploadProgress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      },
+      (error) => {
+        console.log(error);
+        setFields(true);
+        setMsg("Error while uploading : Try Again");
+        setAlertStatus("danger");
+        setTimeout(() => {
+          setFields(false);
+          setLoading(false);
+        }, 5000);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageAsset(downloadURL);
           setLoading(false);
           setFields(true);
-          setMsg("Image Delete Successfully");
+          setMsg("Image Uploaded Successfully");
           setAlertStatus("success");
           setTimeout(() => {
             setFields(false);
           }, 5000);
         });
-      };
+      }
+    );
+  };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const newTreatment = {
-        id: `${Date.now()}`,
-        product_name,
-        description,
-        
-        imageAsset,
-      };
-      console.log(newTreatment);
-      try {
-        if (treatID !== undefined && treatID !== "") {
+  const deleteImage = () => {
+    setLoading(true);
+    const deleteRef = ref(storage, imageAsset);
+    deleteObject(deleteRef).then(() => {
+      setImageAsset(null);
+      setLoading(false);
+      setFields(true);
+      setMsg("Image Delete Successfully");
+      setAlertStatus("success");
+      setTimeout(() => {
+        setFields(false);
+      }, 5000);
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newTreatment = {
+      id: `${Date.now()}`,
+      product_name,
+      description,
+
+      imageAsset,
+    };
+    console.log(newTreatment);
+    try {
+      if (treatID !== undefined && treatID !== "") {
         await treatment_data_services.updateTreatment(treatID, newTreatment);
         alert("Treatment Updated successfully!");
-          setLoading(false);
-          setFields(true);
-          setTimeout(() => {
-            setFields(false);
-            setImageAsset(null);
-          }, 5000);
-        } else {
-            alert("Treatment Update FAILED!");
-            navigate("/treatmentlist");
-        }
-        navigate("/treatmentlist");
-      } catch (err) {
-        setMessage({ error: false, msg: err.message });
-      }
-      };
-
-    const resetForm = () => {
-        setProduct_name("")
-        setDescription("")
-        
-        const deleteRef = ref(storage, imageAsset);
-        deleteObject(deleteRef).then(() => {
+        setLoading(false);
+        setFields(true);
+        setTimeout(() => {
+          setFields(false);
           setImageAsset(null);
-          setLoading(false);
-          setFields(true);
-          setTimeout(() => {
-            setFields(false);
-          }, 5000);
-        });
+        }, 5000);
+      } else {
+        alert("Treatment Update FAILED!");
+        navigate("/treatmentlist");
+      }
+      navigate("/treatmentlist");
+    } catch (err) {
+      setMessage({ error: false, msg: err.message });
     }
+  };
+
+  const resetForm = () => {
+    setProduct_name("");
+    setDescription("");
+
+    const deleteRef = ref(storage, imageAsset);
+    deleteObject(deleteRef).then(() => {
+      setImageAsset(null);
+      setLoading(false);
+      setFields(true);
+      setTimeout(() => {
+        setFields(false);
+      }, 5000);
+    });
+  };
 
   // -----------------------------------------------   Fetch data from firestore        -----------------------------------
 
-    const { treatID } = useParams();
-    console.log("Treatment ID: ", treatID);
-    
-    const editHandler = async () => {
-      setMessage("");
-      try {
-        const docSnap = await treatment_data_services.getTreatment(treatID);
-        console.log("Got the Data: ", docSnap.data());
-        setProduct_name(docSnap.data().product_name);
-        setDescription(docSnap.data().description)
-        
-        setImageAsset(docSnap.data().imageAsset);
-      } catch {}
-    };
-    useEffect(() => {
-      console.log("Got ID: ", treatID);
-      if (treatID !== undefined && treatID !== "") {
-        editHandler();
-        console.log("Check ", treatID);
-      }
-    }, [treatID]);
+  const { treatID } = useParams();
+  console.log("Treatment ID: ", treatID);
+
+  const editHandler = async () => {
+    setMessage("");
+    try {
+      const docSnap = await treatment_data_services.getTreatment(treatID);
+      console.log("Got the Data: ", docSnap.data());
+      setProduct_name(docSnap.data().product_name);
+      setDescription(docSnap.data().description);
+
+      setImageAsset(docSnap.data().imageAsset);
+    } catch {}
+  };
+  useEffect(() => {
+    console.log("Got ID: ", treatID);
+    if (treatID !== undefined && treatID !== "") {
+      editHandler();
+      console.log("Check ", treatID);
+    }
+  }, [treatID]);
 
   return (
-        <div className="bg-primary w-full overflow-hidden">
-        <main className="mt-1 p-12 w-full ">
-            <div className={`bg-primary ${styles.flexStart}`}>
-                <div className={`${styles.boxWidth}`}>
-                    <Helmet title="Update Treatment">
-            
-    {/*--------------- Messages --------------*/}
-                    {fields && (
-                                    <motion.p
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    className={`w-full p2 rounded-lg text-center text-lg font-semibold ${
-                                        alertStatus === "danger"
-                                        ? "bg-alert-red text-black"
-                                        : "bg-alert-green text-green-900"
-                                    }`}
-                                    >
-                                    {msg}
-                                    </motion.p>
-                                )}
+    <div className="bg-primary w-full overflow-hidden">
+      <main className="mt-1 p-12 w-full ">
+        <div className={`bg-primary ${styles.flexStart}`}>
+          <div className={`${styles.boxWidth}`}>
+            <Helmet title="Update Treatment">
+              {/*--------------- Messages --------------*/}
+              {fields && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className={`w-full p2 rounded-lg text-center text-lg font-semibold ${
+                    alertStatus === "danger"
+                      ? "bg-alert-red text-black"
+                      : "bg-alert-green text-green-900"
+                  }`}
+                >
+                  {msg}
+                </motion.p>
+              )}
 
-                        <div className="mt-10 sm:mt-0">
-                            <div className="md:grid md:grid-cols-3 md:gap-6">
-                            <div className="md:col-span-1">
-                                <div className="px-4 sm:px-0">
-                                <h3 className="text-lg font-medium leading-6 text-black">
-                                    Treatment
-                                </h3>
-                                <p className="mt-1 text-sm text-black">
-                                    Update treatment name and the discription of the disease
-                                </p>
-                                </div>
-                            </div>
+              <div className="mt-10 sm:mt-0">
+                <div className="md:grid md:grid-cols-3 md:gap-6">
+                  <div className="md:col-span-1">
+                    <div className="px-4 sm:px-0">
+                      <h3 className="text-lg font-medium leading-6 text-black">
+                        Treatment
+                      </h3>
+                      <p className="mt-1 text-sm text-black">
+                        Update treatment name and the discription of the disease
+                      </p>
+                    </div>
+                  </div>
 
-                            <div className="mt-5 md:mt-0 md:col-span-2">
-                            <form
+                  <div className="mt-5 md:mt-0 md:col-span-2">
+                    <form
                       onSubmit={handleSubmit}
                       className="bg-box-gradient text-black"
                     >
@@ -290,31 +296,31 @@ const TreatmentUpdate = () => {
                         </div>
                         <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                           <div className="text-right grid grid-cols-7 gap-4 content-center ...">
-                            <input
-                              type="reset"
-                              className={`${styles.ALbtn} font-semibold `}
-                              value="Reset"
-                              onClick={() => resetForm()}
-                            />
-                            <button
+                          <button
                               type="submit"
                               className={`${styles.ALbtn} font-semibold `}
                             >
                               Save
                             </button>
+                            <input
+                              type="reset"
+                              className={`${styles.ALbtn} font-semibold `}
+                              value="Reset"
+                              onClick={() => resetForm()}
+                            />                            
                           </div>
                         </div>
                       </div>
                     </form>
-                                </div>
-                            </div>
-                        </div>
-                    </Helmet>
+                  </div>
                 </div>
-            </div>
-        </main>
+              </div>
+            </Helmet>
+          </div>
+        </div>
+      </main>
     </div>
-  )
-}
+  );
+};
 
-export default TreatmentUpdate
+export default TreatmentUpdate;
