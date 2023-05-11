@@ -23,6 +23,8 @@
     "@progress/kendo-react-pdf": "^5.9.0",
     "@progress/kendo-react-treeview": "^5.9.0",
     "@progress/kendo-theme-default": "^5.10.0",
+    "@tensorflow/tfjs": "^4.5.0",
+    "@tensorflow/tfjs-converter": "^4.5.0",
     "firebase": "^9.18.0",
     "framer-motion": "^7.3.5",
     "jspdf": "^2.5.1",

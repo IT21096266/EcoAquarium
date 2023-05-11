@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Navbar, Footer } from './components'
 import { AnimatePresence } from 'framer-motion'
-import AppRoutes from "./components/Routes/Routes";
+import AppRoutes from "./Routes/Routes";
 import { useStateValue } from './context/StateProvider';
 import { getAllItems } from './utils/firebaseFunctions';
 import { actionType } from './context/reducer';
