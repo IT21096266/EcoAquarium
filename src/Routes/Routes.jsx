@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { DiseaseList, AddDisease, DiseaseUpdate, AddTreatment, Create, Upload, ViewPosts,TreatmentList,TreatmentUpdate, TreatmentView, 
          Calculator, Model } from '../pages/index'
-import { MainContainer } from "../index";
+import { MainContainer } from "../components/index";
 
 const AppRoutes = () => {
   return (
