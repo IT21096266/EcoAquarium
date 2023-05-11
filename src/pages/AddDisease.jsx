@@ -4,12 +4,7 @@ import Helmet from "../components/Helmet/Helmet";
 import Loader from "../components/UI/Loader";
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { motion } from "framer-motion";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../services/firebase-config";
 import DiseaseDataService from "../services/disease-services";
 import { useState } from "react";
