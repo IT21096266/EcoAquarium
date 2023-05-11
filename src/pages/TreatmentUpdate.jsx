@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from "react";
 import styles from "../Styles/styles";
 import Helmet from "../components/Helmet/Helmet";
 import Loader from "../components/UI/Loader";
@@ -11,19 +10,13 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { storage } from "../services/firebase-config";
-import DiseaseDataService from "../services/disease-services";
-import { useState } from "react";
+import treatment_data_services from "../services/treatment_services";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const AddDisease = () => {
-  const navigate = useNavigate();
-
-  const { diseaseID } = useParams();
-  const [diseaseName, setDiseaseName] = useState("");
-  const [diseaseDescription, setDescription] = useState("");
-  const [diseaseCauses, setDiseaseCauses] = useState("");
-  const [diseasePrevention, setDiseasePrevention] = useState("");
-  const [diseaseTreatment, setDiseaseTreatment] = useState("");
+const TreatmentUpdate = () => {
+  const [product_name, setProduct_name] = useState("");
+  const [description, setDescription] = useState("");
   const [fields, setFields] = useState(false);
   const [imageAsset, setImageAsset] = useState(null);
   const [isLoading, setLoading] = useState(false);
@@ -31,12 +24,14 @@ const AddDisease = () => {
   const [alertStatus, setAlertStatus] = useState("danger");
   const [message, setMessage] = useState({ error: false, msg: "" });
 
+  const navigate = useNavigate();
+
   const uploadImage = (e) => {
     setLoading(true);
     const imageFile = e.target.files[0];
     const storageRef = ref(
       storage,
-      `Images/Disease/${Date.now()}-${imageFile.name}`
+      `Images/TreatmentImg/${Date.now()}-${imageFile.name}`
     );
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
 
@@ -88,37 +83,38 @@ const AddDisease = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newDisease = {
+    const newTreatment = {
       id: `${Date.now()}`,
-      diseaseName,
-      diseaseDescription,
-      diseaseCauses,
-      diseasePrevention,
-      diseaseTreatment,
+      product_name,
+      description,
+
       imageAsset,
     };
-    console.log(newDisease);
+    console.log(newTreatment);
     try {
-      await DiseaseDataService.addDisease(newDisease);
-      alert("Disease added successfully!");
-      setLoading(false);
-      setFields(true);
-      setTimeout(() => {
-        setFields(false);
-        setImageAsset(null);
-      }, 5000);
-      navigate("/diseaseList");
+      if (treatID !== undefined && treatID !== "") {
+        await treatment_data_services.updateTreatment(treatID, newTreatment);
+        alert("Treatment Updated successfully!");
+        setLoading(false);
+        setFields(true);
+        setTimeout(() => {
+          setFields(false);
+          setImageAsset(null);
+        }, 5000);
+      } else {
+        alert("Treatment Update FAILED!");
+        navigate("/treatmentlist");
+      }
+      navigate("/treatmentlist");
     } catch (err) {
       setMessage({ error: false, msg: err.message });
     }
   };
 
   const resetForm = () => {
-    setDiseaseName("");
+    setProduct_name("");
     setDescription("");
-    setDiseaseCauses("");
-    setDiseasePrevention("");
-    setDiseaseTreatment("");
+
     const deleteRef = ref(storage, imageAsset);
     deleteObject(deleteRef).then(() => {
       setImageAsset(null);
@@ -130,13 +126,37 @@ const AddDisease = () => {
     });
   };
 
+  // -----------------------------------------------   Fetch data from firestore        -----------------------------------
+
+  const { treatID } = useParams();
+  console.log("Treatment ID: ", treatID);
+
+  const editHandler = async () => {
+    setMessage("");
+    try {
+      const docSnap = await treatment_data_services.getTreatment(treatID);
+      console.log("Got the Data: ", docSnap.data());
+      setProduct_name(docSnap.data().product_name);
+      setDescription(docSnap.data().description);
+
+      setImageAsset(docSnap.data().imageAsset);
+    } catch {}
+  };
+  useEffect(() => {
+    console.log("Got ID: ", treatID);
+    if (treatID !== undefined && treatID !== "") {
+      editHandler();
+      console.log("Check ", treatID);
+    }
+  }, [treatID]);
+
   return (
     <div className="bg-primary w-full overflow-hidden">
       <main className="mt-1 p-12 w-full ">
         <div className={`bg-primary ${styles.flexStart}`}>
           <div className={`${styles.boxWidth}`}>
-            <Helmet title="New Disease">
-              {/*-------------- Messages -------------*/}
+            <Helmet title="Update Treatment">
+              {/*--------------- Messages --------------*/}
               {fields && (
                 <motion.p
                   initial={{ opacity: 0 }}
@@ -157,10 +177,10 @@ const AddDisease = () => {
                   <div className="md:col-span-1">
                     <div className="px-4 sm:px-0">
                       <h3 className="text-lg font-medium leading-6 text-black">
-                        Disease Form
+                        Treatment
                       </h3>
                       <p className="mt-1 text-sm text-black">
-                        Add disease name and the discription of the disease
+                        Update treatment name and the discription of the disease
                       </p>
                     </div>
                   </div>
@@ -174,17 +194,20 @@ const AddDisease = () => {
                         <div className="px-4 py-5 bg-white sm:p-6">
                           <div className="grid grid-cols-6 gap-6">
                             <div className="col-span-6 sm:col-span-5">
-                              <label htmlFor="first_name" className="formLable">
-                                Disease Name
+                              <label
+                                htmlFor="treatment_name"
+                                className="formLable"
+                              >
+                                Treatment Name
                               </label>
                               <input
                                 type="text"
-                                name="disease_name"
-                                id="disease_name"
+                                name="treatment_name"
+                                id="treatment_name"
                                 maxLength="30"
-                                defaultValue={diseaseName}
+                                defaultValue={product_name}
                                 onSelect={(e) => {
-                                  setDiseaseName(e.target.value);
+                                  setProduct_name(e.target.value);
                                 }}
                                 required
                                 className={`${styles.ADtxt}`}
@@ -193,17 +216,17 @@ const AddDisease = () => {
 
                             <div className="col-span-6 sm:col-span-5">
                               <label
-                                htmlFor="disease_description"
+                                htmlFor="treatment_description"
                                 className="formLable"
                               >
-                                Describe the disease
+                                Describe the Treatment
                               </label>
                               <textarea
                                 type="text"
-                                name="disease_description"
-                                id="disease_description"
+                                name="treatment_description"
+                                id="treatment_description"
                                 maxLength="300"
-                                defaultValue={diseaseDescription}
+                                defaultValue={description}
                                 onSelect={(e) => {
                                   setDescription(e.target.value);
                                 }}
@@ -212,75 +235,10 @@ const AddDisease = () => {
                               ></textarea>
                             </div>
 
-                            <div className="col-span-6 sm:col-span-5">
-                              <label
-                                htmlFor="disease_sauses"
-                                className="formLable"
-                              >
-                                Causes of Disease
-                              </label>
-                              <textarea
-                                type="text"
-                                name="disease_causes"
-                                id="disease_causes"
-                                // maxLength="15"
-                                defaultValue={diseaseCauses}
-                                onSelect={(e) => {
-                                  setDiseaseCauses(e.target.value);
-                                }}
-                                required
-                                className={`${styles.TXTar}`}
-                              ></textarea>
-                            </div>
-
-                            <div className="col-span-6 sm:col-span-5">
-                              <label
-                                htmlFor="disease_prevention"
-                                className="formLable"
-                              >
-                                Disease Prevention
-                              </label>
-                              <textarea
-                                type="text"
-                                name="disease_prevention"
-                                id="disease_prevention"
-                                // maxLength="15"
-                                defaultValue={diseasePrevention}
-                                onSelect={(e) => {
-                                  setDiseasePrevention(e.target.value);
-                                }}
-                                required
-                                className={`${styles.TXTar}`}
-                              ></textarea>
-                            </div>
-
-                            <div className="col-span-6 sm:col-span-3 lg:col-span-5">
-                              <label
-                                htmlFor="disease_treatment"
-                                className="formLable"
-                              >
-                                Treatment for the disease
-                              </label>
-                              <textarea
-                                type="text"
-                                name="disease_treatment"
-                                id="disease_treatment"
-                                // maxLength="15"
-                                defaultValue={diseaseTreatment}
-                                onSelect={(e) => {
-                                  setDiseaseTreatment(e.target.value);
-                                }}
-                                required
-                                className={`${styles.TXTar}`}
-                              ></textarea>
-                            </div>
                             {/*-------------- Image Uploader -------------*/}
                             <div className="col-span-6 sm:col-span-3 lg:col-span-5">
-                              <label
-                                htmlFor="disease_treatment"
-                                className="formLable"
-                              >
-                                Upload Disease Image
+                              <label htmlFor="treatment" className="formLable">
+                                Upload Treatment Image
                               </label>
                               <div
                                 className="mt-4 group flex justify-center flex-col border-2 border-dotted
@@ -338,18 +296,18 @@ const AddDisease = () => {
                         </div>
                         <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                           <div className="text-right grid grid-cols-7 gap-4 content-center ...">
-                            <input
-                              type="reset"
-                              className={`${styles.ALbtn} font-semibold `}
-                              value="Reset"
-                              onClick={() => resetForm()}
-                            />
-                            <button
+                          <button
                               type="submit"
                               className={`${styles.ALbtn} font-semibold `}
                             >
                               Save
                             </button>
+                            <input
+                              type="reset"
+                              className={`${styles.ALbtn} font-semibold `}
+                              value="Reset"
+                              onClick={() => resetForm()}
+                            />                            
                           </div>
                         </div>
                       </div>
@@ -365,4 +323,4 @@ const AddDisease = () => {
   );
 };
 
-export default AddDisease;
+export default TreatmentUpdate;
