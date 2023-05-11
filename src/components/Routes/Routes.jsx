@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
-import { DiseaseList, AddDisease, DiseaseUpdate, AddTreatment, Create, Upload, ViewPosts,TreatmentList,TreatmentUpdate, Calculator } from '../../pages'
+import { DiseaseList, AddDisease, DiseaseUpdate, AddTreatment, Create, Upload, ViewPosts,TreatmentList,TreatmentUpdate, TreatmentView, Calculator } from '../../pages'
 
 import { MainContainer } from "../index";
 
@@ -21,6 +20,7 @@ const AppRoutes = () => {
       <Route path="/viewposts" element={<ViewPosts />} />  
       <Route path="/treatmentlist" element={<TreatmentList/>}/>  
       <Route path="/calculator" element={<Calculator/>}/>
+      <Route path="/treatmentview" element={<TreatmentView/>}/> 
     </Routes>
   );
 };

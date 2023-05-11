@@ -7,7 +7,6 @@ import styles from "../Styles/styles";
 import Helmet from "../components/Helmet/Helmet";
 
 const TreatmentList = () => {
-
   const [treatment, setTreatment] = useState([]);
 
   const navigate = useNavigate(); // Navigate
@@ -25,15 +24,18 @@ const TreatmentList = () => {
   //Delete Treatment
   const deleteHandler = async (id) => {
     await treatment_data_services.deleteTreatment(id);
-    // const deleteRef = ref(storage, imageAsset);
-    // deleteRef.delete().then(() => {
-    //   window.alert('Treatment deleted successfully');
-    //   getTreatment();
-    // }).catch((error) => {
-    //   console.log('Error deleting image:', error);
-    // });
+    window.location.reload();
+    alert("are sure?");
+    const deleteRef = ref(storage, imageAsset);
+    deleteRef
+      .delete()
+      .then(() => {
+        getTreatment();
+      })
+      .catch((error) => {
+        console.log("Error deleting image:", error);
+      });
     getTreatment();
-    alert("You still want delete this?")
   };
 
   // navigate to addtreatment
@@ -43,64 +45,59 @@ const TreatmentList = () => {
 
   return (
     <div className="bg-primary w-full overflow-hidden">
-        <main className="mt-1 p-12 w-full ">
-            <div className={`bg-primary ${styles.flexStart}`}>
-                <div className={`${styles.boxWidth}`}>
-                <Helmet title="Stock List">
-      
-      <div
-        className={`flex-1 ${styles.flexStart} flex-col xl:px-0 sm:px-16 px-6 SL-bg-table rounded-md SL-log`}
-      >
-        <div>
-          <button className={`${styles.ADbtn}`} onClick={navigateTreatmentForm}>
-            Add Treatments
-          </button>
-          {/* <button className={`${styles.ADbtn}`} onClick={navigateReport}>
+      <main className="mt-1 p-12 w-full ">
+        <div className={`bg-primary ${styles.flexStart}`}>
+          <div className={`${styles.boxWidth}`}>
+            <Helmet title="Stock List">
+              <div>
+                <button
+                  className={`${styles.ADbtn}`}
+                  onClick={navigateTreatmentForm}
+                >
+                  Add Treatments
+                </button>
+                {/* <button className={`${styles.ADbtn}`} onClick={navigateReport}>
             Genarate A Report
           </button> */}
-        </div>
-
-        <table className={`${styles.SLtable}`}>
-          <thead className={`${styles.SLthead}`}>
-            <tr>
-              <th className={`${styles.SLtd}`}>ID</th>
-              <th className={`${styles.SLtd}`}>Treatment</th>
-              <th className={`${styles.SLtd}`}>Description</th>
-              <th className={`${styles.SLtd}`}>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {treatment.map((doc, index) => {
-              return (
-                <tr key={doc.id}>
-                  <td className={`${styles.SLtd}`}>{index + 1}</td>
-                  <td className={`${styles.SLtd}`}>{doc.product_name} </td>
-                  <td className={`${styles.SLtd}`}>{doc.description}</td>
-                
-                  <td>
-                    <button className={`${styles.SLbtn}`}>
-                      <Link to={`treatmentupdate/${doc.id}`}>Edit</Link>
-                    </button>
-
+              </div>
+              {treatment.map((doc,index)=>{
+                return(
+                  <div class="gap-5 my-4 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative">
+                  <img src={doc.imageAsset} alt="treatment image" className="rounded-lg h-56"/>
+                  <div class="absolute top-0 right-0 flex items-end">
                     <button
-                      className={`${styles.SLbtn}`}
-                      onClick={(e) => deleteHandler(doc.id)}
+                      type="button"
+                      class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+                    >
+                     <Link to={`treatmentupdate/${doc.id}`}>Edit</Link>
+                    </button>
+                    <button
+                    onClick={(e) => deleteHandler(doc.id)}
+                      type="button"
+                      class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
                     >
                       Delete
                     </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </Helmet>
+                  </div>
+                  <div class="flex flex-col justify-between p-10 leading-normal">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{index+1}</h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {doc.product_name}
+                    </h5>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                    {doc.description}
+                    </p>
+                  </div>
                 </div>
-            </div>
-        </main>
+                );
+              })}
+             
+            </Helmet>
+          </div>
+        </div>
+      </main>
     </div>
-  )
-}
+  );
+};
 
-export default TreatmentList
+export default TreatmentList;
