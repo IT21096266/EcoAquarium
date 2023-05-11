@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { DiseaseList, AddDisease, DiseaseUpdate, AddTreatment, Create, Upload, ViewPosts,TreatmentList,TreatmentUpdate, TreatmentView, 
-         Calculator, Model } from '../pages/index'
+         Calculator, Model, Map } from '../pages/index'
 import { MainContainer } from "../components/index";
 
 const AppRoutes = () => {
@@ -20,6 +20,7 @@ const AppRoutes = () => {
       <Route path="/model" element={<Model />} /> 
       <Route path="/viewposts" element={<ViewPosts />} />  
       <Route path="/treatmentlist" element={<TreatmentList/>}/>  
+      <Route path="/map" element={<Map/>} />
       <Route path="/calculator" element={<Calculator/>}/>
       <Route path="/treatmentview" element={<TreatmentView/>}/> 
     </Routes>
