@@ -1,3 +1,5 @@
+import { fromJSON } from 'postcss'
+
 export {default as DiseaseList} from '../pages/DiseaseList'
 export {default as AddDisease} from '../pages/AddDisease'
 export {default as DiseaseUpdate} from '../pages/DiseaseUpdate'
@@ -11,3 +13,4 @@ export {default as TreatmentUpdate} from '../pages/TreatmentUpdate'
 export {default as TreatmentView} from '../pages/TreatmentView'
 export {default as Map} from '../pages/Map'
 export {default as Calculator} from '../pages/Calculator'
+export {default as TreatmentPDF} from '../pages/TreatmentPDF'
