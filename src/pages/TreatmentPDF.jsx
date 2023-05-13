@@ -1,8 +1,6 @@
 import { React, useState, useEffect } from "react";
 import styles from "../Styles/styles";
 import treatment_data_services from "../services/treatment_services";
-import { storage } from "../services/firebase-config";
-import { doc } from "firebase/firestore";
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 import { useRef } from "react";
 
@@ -35,7 +33,7 @@ const TreatmentPDF = () => {
               className={`${styles.ADbtn}`}
               onClick={handleExportWithComponent}
             >
-              Dwonload the report
+              Download the report
             </button>
                 <PDFExport fileName="Treatment" ref={pdfExportComponent} paperSize="A4">
               {treatment.map((doc, index) => {
