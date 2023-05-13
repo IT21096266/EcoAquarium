@@ -4,9 +4,7 @@ export {default as Footer} from './Footer/Footer'
 export {default as MainContainer} from './MainContainer'
 export {default as HeroSlider} from './UI/HeroSlider'
 export {default as Loader} from './UI/Loader'
-export {default as RowContainer} from './UI/RowContainer'
-export {default as CartContainer} from './UI/CartContainer'
-export {default as CartItem} from './UI/CartItem'
+
 
 import { facebook, instagram, linkedin, twitter } from '../assets';
 
@@ -22,9 +20,9 @@ export const navLinks = [
       link: "/treatmentview",
     },
     {
-      id: "getEducated",
+      id: "diseaseView",
       title: "Get Educated",
-      link: "/home",
+      link: "/diseaseView",
     },
     {
       id: "community",

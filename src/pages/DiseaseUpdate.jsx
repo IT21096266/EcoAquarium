@@ -161,19 +161,18 @@ const DiseaseUpdate = () => {
             
     {/*--------------- Messages --------------*/}
                     {fields && (
-                                    <motion.p
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    className={`w-full p2 rounded-lg text-center text-lg font-semibold ${
-                                        alertStatus === "danger"
-                                        ? "bg-alert-red text-black"
-                                        : "bg-alert-green text-green-900"
-                                    }`}
-                                    >
-                                    {msg}
-                                    </motion.p>
-                                )}
+                        <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className={`w-full p2 rounded-lg text-center text-lg font-semibold ${
+                            alertStatus === "danger"
+                            ? "bg-alert-red text-black"
+                            : "bg-alert-green text-green-900"
+                        }`}>
+                        {msg}
+                        </motion.p>
+                    )}
 
                         <div className="mt-10 sm:mt-0">
                             <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -286,7 +285,7 @@ const DiseaseUpdate = () => {
                                                 className={`${styles.TXTar}`}>
                                             </textarea>
                                             </div>
-                {/*-------------- Image Uploader -------------*/}
+    {/*-------------- Image Uploader -------------*/}
                         <div className="col-span-6 sm:col-span-3 lg:col-span-5">
                                 <label htmlFor="disease_treatment" className="formLable">
                                     Upload Disease Image
@@ -341,7 +340,7 @@ const DiseaseUpdate = () => {
                             </div>
                         </div>
                     </div>
-                                    </div>
+                          </div>
                                 </div>
                                     <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                         <div className="text-right grid grid-cols-7 gap-4 content-center ...">
