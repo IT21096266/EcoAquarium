@@ -35,7 +35,7 @@ const TreatmentPDF = () => {
               className={`${styles.ADbtn}`}
               onClick={handleExportWithComponent}
             >
-              Dwonload the report
+              Download the report
             </button>
                 <PDFExport fileName="Treatment" ref={pdfExportComponent} paperSize="A4">
               {treatment.map((doc, index) => {

@@ -35,9 +35,14 @@ const DiseaseList = () => {
     getDisease();
   };
 
-  // navigate to /contacts
+  // navigate to /addDisease
   const navigateDiseaseForm = () => {
     navigate("/addDisease");
+  };
+
+  // navigate to /diseasePDF
+  const navigateDiseaseReport = () => {
+    navigate("/diseasePDF");
   };
 
   return (
@@ -65,6 +70,13 @@ const DiseaseList = () => {
                               Add New Disease
                             </button>
                           </th>
+                          <th>
+                            <button
+                                className={`${styles.ALbtn} font-semibold`}
+                                onClick={navigateDiseaseReport}>
+                                Generate Report
+                            </button>
+                          </th>
                           <th scope="col" className={`${styles.ALth}`}></th>
                           <th scope="col" className={`${styles.ALth}`}></th>
                           <th scope="col" className={`${styles.ALth}`}></th>
@@ -85,18 +97,17 @@ const DiseaseList = () => {
                                 {doc.diseaseDescription}
                               </td>
                               <td className={`${styles.ALtd}w-1/6`}>
-                                <button className={`${styles.ALbtn}`}>
-                                  <Link to={`diseaseUpdate/${doc.id}`}>
-                                    Edit
-                                  </Link>
-                                </button>
+                                <Link to={`diseaseUpdate/${doc.id}`}>
+                                  <button className={`${styles.ALbtn}`}>
+                                      Edit
+                                  </button>
+                                </Link>
                               </td>
                               <td className={`${styles.ALtd}w-1/6`}>
                                 <button
                                   className={`${styles.ALbtn}`}
-                                  onClick={(e) => deleteHandler(doc.id)}
-                                >
-                                  Delete
+                                  onClick={(e) => deleteHandler(doc.id)}>
+                                    Delete
                                 </button>
                               </td>
                             </tr>
