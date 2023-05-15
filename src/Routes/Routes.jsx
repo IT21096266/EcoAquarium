@@ -16,9 +16,9 @@ const AppRoutes = () => {
       <Route path="/upload" element={<Upload />} />
       <Route path="/model" element={<Model />} /> 
       <Route path="/viewposts" element={<ViewPosts />} />  
-      <Route path="/map" element={<Map/>} />
       <Route path="/calculator" element={<Calculator/>}/>
       {/* Treatment */}
+      <Route path="/map" element={<Map/>} />
       <Route path="/treatmentlist" element={<TreatmentList/>}/>  
       <Route path='/addtreatment' element={<AddTreatment/> }/>
       <Route path="/treatmentupdate" element={<TreatmentUpdate />} />

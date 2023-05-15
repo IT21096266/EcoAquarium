@@ -61,7 +61,7 @@ const TreatmentList = () => {
       setFilterValue([...filterValue]);
     } else {
       setValue(e.target.value);
-      setTicket([...treatment]);
+      setTreatment([...treatment]);
     }
   };
   return (
@@ -69,7 +69,7 @@ const TreatmentList = () => {
       <main className="mt-1 p-12 w-full ">
         <div className={`bg-primary ${styles.flexStart}`}>
           <div className={`${styles.boxWidth}`}>
-            <div>
+            <div className="absolute">
               <button
                 className={`${styles.ADbtn}`}
                 onClick={navigateTreatmentForm}
