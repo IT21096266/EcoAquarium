@@ -7,7 +7,11 @@ import { doc } from "firebase/firestore";
 
 const TreatmentView = () => {
   const [treatment, setTreatment] = useState([]);
-  //const navigate = useNavigate(); // Navigate
+  const navigate = useNavigate(); // Navigate
+  const navigateMap = () => {
+    navigate("/map");
+  };
+
   useEffect(() => {
     getTreatment();
   }, []);
@@ -32,7 +36,7 @@ const TreatmentView = () => {
       setFilterValue([...filterValue]);
     } else {
       setValue(e.target.value);
-      setTicket([...treatment]);
+      setTreatment([...treatment]);
     }
   };
 
@@ -42,6 +46,14 @@ const TreatmentView = () => {
         <main className="mt-1 p-12 w-full ">
           <div className={`bg-primary ${styles.flexStart}`}>
             <div className={`${styles.boxWidth}`}>
+              <div>
+                <button
+                  className="absolute S-btn bg-btn-gradient hover:bg-btn-gradient duration-500 text-black py-2 px-2 rounded shadow SL-table"
+                  onClick={navigateMap}
+                >
+                  Find nearest vet
+                </button>
+              </div>
               <div className="w-96 float-right mb-10 ">
                 <label htmlFor="simple-search" className="sr-only">
                   Search
