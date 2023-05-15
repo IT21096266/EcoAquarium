@@ -29,6 +29,7 @@ const AppRoutes = () => {
       <Route path="/treatmentlist/treatmentupdate/:treatID" element={<TreatmentUpdate />} />
       <Route path="/treatmentview" element={<TreatmentView/>}/> 
       <Route path="/treatmentpdf" element={<TreatmentPDF/>}/> 
+
     </Routes>
   );
 };
