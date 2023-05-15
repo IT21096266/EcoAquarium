@@ -130,7 +130,7 @@ const TreatmentList = () => {
                 </div>
                         );
                       })
-            :treatment.map((doc, index) => {
+            :treatment.map((doc) => {
               return (
                 <div class="gap-5 my-4 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative">
                   <img
