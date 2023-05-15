@@ -231,7 +231,7 @@ const TreatmentUpdate = () => {
                                   setDescription(e.target.value);
                                 }}
                                 required
-                                className={`${styles.TXTar}`}
+                                className="ml-1 w-[740px] h-[100px] bg-transparent placeholder:text-gray-800 form-control block px-3 py-1.5 border border-solid border-gray-300 rounded-md resize-none hover:bg-slate-100 duration-500"
                               ></textarea>
                             </div>
 
