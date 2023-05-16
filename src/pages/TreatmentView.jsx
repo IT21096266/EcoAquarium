@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import treatment_data_services from "../services/treatment_services";
-import { storage } from "../services/firebase-config";
 import styles from "../Styles/styles";
-import { doc } from "firebase/firestore";
 
 const TreatmentView = () => {
   const [treatment, setTreatment] = useState([]);
-  const navigate = useNavigate(); // Navigate
+
+  // Navigate
+  const navigate = useNavigate();
   const navigateMap = () => {
     navigate("/map");
   };
 
+  //fetch data
   useEffect(() => {
     getTreatment();
   }, []);
@@ -75,54 +76,56 @@ const TreatmentView = () => {
                   {value.length > 0
                     ? filterValue.map((doc) => {
                         return (
-                          <div className="max-w-sm col-span-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-60">
-                            {/* <a href="#"> */}
-                            <img
-                              src={doc.imageAsset}
-                              alt="treatment image"
-                              className="rounded-lg h-60"
-                            />
-                            {/* </a> */}
-                            <div className="p-5">
-                              <a href="#">
-                                <h5 className="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                  {doc.product_name.substring(0, 17)}
-                                  {doc.product_name.length > 17 ? "..." : ""}
-                                </h5>
-                              </a>
-                              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                                {doc.description.substring(0, 45)}
-                                {doc.description.length > 45 ? "..." : ""}
-                              </p>
-                            </div>
-                          </div>
-                        );
-                      })
-                    : treatment.map((doc) => {
-                        return (
-                          <div key={doc.id}>
+                          
                             <div className="max-w-sm col-span-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-60">
-                              {/* <a href="#"> */}
+                              <Link to={`treatmentdetails/${doc.id}`}>
                               <img
                                 src={doc.imageAsset}
                                 alt="treatment image"
                                 className="rounded-lg h-60"
                               />
-                              {/* </a> */}
+
                               <div className="p-5">
-                                <a href="#">
-                                  <h5 className="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                    {doc.product_name.substring(0, 17)}
-                                    {doc.product_name.length > 17 ? "..." : ""}
-                                  </h5>
-                                </a>
+                                <h5 className="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                  {doc.product_name.substring(0, 17)}
+                                  {doc.product_name.length > 17 ? "..." : ""}
+                                </h5>
+
+                                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                  {doc.description.substring(0, 45)}
+                                  {doc.description.length > 45 ? "..." : ""}
+                                </p>
+                              </div>
+                              </Link>
+
+                            </div>
+                        );
+                      })
+                    : treatment.map((doc) => {
+                        return (
+                          <Link to={`treatmentdetails/${doc.id}`}>
+                            {/* <div key={doc.id}> */}
+                            <div className="max-w-sm col-span-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-60">
+                              <img
+                                src={doc.imageAsset}
+                                alt="treatment image"
+                                className="rounded-lg h-60"
+                              />
+
+                              <div className="p-5">
+                                <h5 className="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                  {doc.product_name.substring(0, 17)}
+                                  {doc.product_name.length > 17 ? "..." : ""}
+                                </h5>
+
                                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                                   {doc.description.substring(0, 45)}
                                   {doc.description.length > 45 ? "..." : ""}
                                 </p>
                               </div>
                             </div>
-                          </div>
+                            {/* </div> */}
+                          </Link>
                         );
                       })}
                 </div>

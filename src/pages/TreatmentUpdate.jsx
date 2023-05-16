@@ -225,7 +225,7 @@ const TreatmentUpdate = () => {
                                 type="text"
                                 name="treatment_description"
                                 id="treatment_description"
-                                maxLength="300"
+                                //maxLength="300"
                                 defaultValue={description}
                                 onSelect={(e) => {
                                   setDescription(e.target.value);
