@@ -25,9 +25,9 @@ export const navLinks = [
       link: "/diseaseView",
     },
     {
-      id: "community",
+      id: "uploadC",
       title: "Community",
-      link: "/home",
+      link: "/uploadC",
     },
     {
       id: "contact",
