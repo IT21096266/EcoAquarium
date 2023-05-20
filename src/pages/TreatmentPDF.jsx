@@ -1,8 +1,6 @@
 import { React, useState, useEffect } from "react";
 import styles from "../Styles/styles";
 import treatment_data_services from "../services/treatment_services";
-import { storage } from "../services/firebase-config";
-import { doc } from "firebase/firestore";
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 import { useRef } from "react";
 
@@ -47,13 +45,11 @@ const TreatmentPDF = () => {
                       className="rounded-lg h-56"
                     /> */}
                     <div class="flex flex-col justify-between p-10 leading-normal">
-                      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                        
-                      </h5>
-                      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                      
+                      <h5 class="mb-2 text-1xl font-bold tracking-tight text-gray-900">
                       {index + 1}. {doc.product_name}
                       </h5>
-                      <p class="mb-3 font-normal text-gray-800">
+                      <p class="mb-3 text-xs text-justify text-gray-800">
                       {doc.description}
                       </p>
                     </div>
