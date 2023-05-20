@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { DiseaseList, AddDisease, DiseaseUpdate, DiseasePDF, Model, DiseaseView, DiseaseDetails, AddTreatment, Create, Upload, ViewPosts,
-  TreatmentList, TreatmentUpdate, TreatmentView, Calculator, Map, TreatmentPDF, UploadContent } from '../pages/index'
+  TreatmentList, TreatmentUpdate, TreatmentView, Calculator, Map, TreatmentPDF, TreatmentDetails, UploadContent } from '../pages/index'
 import { MainContainer } from "../components/index";
 
 
@@ -31,6 +31,10 @@ const AppRoutes = () => {
       <Route path="/treatmentview" element={<TreatmentView/>}/> 
       <Route path="/treatmentpdf" element={<TreatmentPDF/>}/> 
       <Route path="/uploadC" element={<UploadContent/>}/> 
+      <Route path="/treatmentdetails" element={<TreatmentDetails/>}/> 
+      <Route path="/treatmentview/treatmentdetails/:treatID" element={<TreatmentDetails/>} />
+      <Route path="/treatmentlist/treatmentdetails/:treatID" element={<TreatmentDetails/>} />
+
     </Routes>
   );
 };
