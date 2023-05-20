@@ -1,8 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { DiseaseList, AddDisease, DiseaseUpdate, DiseasePDF, Model, DiseaseView, DiseaseDetails, AddTreatment, Create, Upload, ViewPosts,
-  TreatmentList, TreatmentUpdate, TreatmentView, Calculator, Map, TreatmentPDF } from '../pages/index'
+  TreatmentList, TreatmentUpdate, TreatmentView, Calculator, Map, TreatmentPDF, UploadContent } from '../pages/index'
 import { MainContainer } from "../components/index";
+
 
 const AppRoutes = () => {
   return (
@@ -29,6 +30,8 @@ const AppRoutes = () => {
       <Route path="/treatmentlist/treatmentupdate/:treatID" element={<TreatmentUpdate />} />
       <Route path="/treatmentview" element={<TreatmentView/>}/> 
       <Route path="/treatmentpdf" element={<TreatmentPDF/>}/> 
+      <Route path="/uploadC" element={<UploadContent/>}/> 
+      
     </Routes>
   );
 };
