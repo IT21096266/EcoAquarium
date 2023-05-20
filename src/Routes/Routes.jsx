@@ -31,7 +31,6 @@ const AppRoutes = () => {
       <Route path="/treatmentview" element={<TreatmentView/>}/> 
       <Route path="/treatmentpdf" element={<TreatmentPDF/>}/> 
       <Route path="/uploadC" element={<UploadContent/>}/> 
-      
     </Routes>
   );
 };
