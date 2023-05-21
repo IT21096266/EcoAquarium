@@ -4,14 +4,14 @@ import { getStorage } from 'firebase/storage'
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyARQ9O4KBFkpR2hm1ycZ1B1L_FO1JzLK8c",
-  authDomain: "itpm-abbfd.firebaseapp.com",
-  databaseURL: "https://itpm-abbfd-default-rtdb.firebaseio.com",
-  projectId: "itpm-abbfd",
-  storageBucket: "itpm-abbfd.appspot.com",
-  messagingSenderId: "596175066085",
-  appId: "1:596175066085:web:c1c54d34e554fb7098550c",
-  measurementId: "G-J3FMKVEFBD"
+  apiKey: "AIzaSyB-NYWBJK97peUg93tC23GU2iAVMITP-a8",
+  authDomain: "itpm-02.firebaseapp.com",
+  databaseURL: "https://itpm-02-default-rtdb.firebaseio.com",
+  projectId: "itpm-02",
+  storageBucket: "itpm-02.appspot.com",
+  messagingSenderId: "590546768079",
+  appId: "1:590546768079:web:b4cfbede4ef4edd469a7ba",
+  measurementId: "G-TTNG0D4E58"
 };
 
 const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig)   // This will check is the app is initialized 
