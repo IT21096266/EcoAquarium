@@ -82,7 +82,7 @@ devDependencies :
     "vite": "^3.1.0"
     
  if you have any issues regurding the above project please contact us throughfollowing emails:
- it21096266@my.sliit.lk
- it21132346@my.sliit.lk
- it21042256@my.sliit.lk
- it21080562@my.sliit.lk
+ 1. it21096266@my.sliit.lk 
+ 2. it21132346@my.sliit.lk 
+ 3. it21042256@my.sliit.lk 
+ 4. it21080562@my.sliit.lk
