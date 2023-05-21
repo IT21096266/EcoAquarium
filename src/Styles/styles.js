@@ -9,13 +9,11 @@ const styles = {
     flexStart: "flex justify-center items-start",
 
     paddingX: "sm:px-16 px-6",
-    paddingY: "sm:py-16 py-6",
+    paddingY: "sm:py-2 py-1",
     padding: "sm:px-16 px-6 sm:py-12 py-4",
 
     marginX: "sm:mx-16 mx-6",
     marginY: "sm:my-16 my-6",
-
-    
 
     mainHeader: "fixed z-50 w-screen bg-slate-300 p-6 px-16 sticky top-0",
 
@@ -35,14 +33,15 @@ const styles = {
 
     formLable: "block text-sm font-medium text-gray-700",
 
-// Address Update, Add Form
-    ADtxt: "mt-1 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md h-8 box-border hover:box-content hover:bg-slate-100 duration-500 ",
-    
-// Address List
+// Update, Add Form
+    ADtxt: "mt-1 block w-full shadow-sm sm:text-sm border border-solid border-gray-300 rounded-md resize-none rounded-md h-10 box-border hover:bg-slate-100 duration-500 ",
+    TXTar: "ml-1 w-[850px] h-[100px] bg-transparent placeholder:text-gray-800 form-control block px-3 py-1.5 border border-solid border-gray-300 rounded-md resize-none hover:bg-slate-100 duration-500",
+
+// List
     ALtable: "w-full text-sm text-center text-gray-500 dark:text-gray-400 table-fixed mt-4 mb-4",
     ALthread: "text-xs",
-    ALth: " relative",
-    ALtd: "py-2 px-6 h-15 text-sm text-justify-relative text-white ",
+    ALth: "relative",
+    ALtd: "py-3 px-4 text-sm text-justify-relative text-white ",
     ALbtn: "bg-blue-gradient text-black py-2 px-4 rounded shadow mb-2 hover:bg-blue-200 hover:text-blue-800 duration-500",
 
 //Stock List

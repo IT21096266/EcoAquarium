@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@googlemaps/react-wrapper": "^1.1.35",
     "@progress/kendo-data-query": "^1.6.0",
     "@progress/kendo-drawing": "^1.17.2",
     "@progress/kendo-licensing": "^1.2.2",
@@ -23,8 +24,12 @@
     "@progress/kendo-react-pdf": "^5.9.0",
     "@progress/kendo-react-treeview": "^5.9.0",
     "@progress/kendo-theme-default": "^5.10.0",
+    "@react-pdf/renderer": "^3.1.9",
+    "@tensorflow/tfjs": "^4.5.0",
+    "@tensorflow/tfjs-converter": "^4.5.0",
     "firebase": "^9.18.0",
     "framer-motion": "^7.3.5",
+    "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",
     "react": "^18.2.0",
@@ -32,10 +37,12 @@
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.0.3",
     "react-icons": "^4.4.0",
+    "react-pdf": "^6.2.2",
     "react-router-dom": "^6.4.3",
     "react-slick": "^0.29.0",
     "reactstrap": "^9.1.4",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "uuid4": "^2.0.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

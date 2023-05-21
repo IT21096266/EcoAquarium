@@ -4,6 +4,8 @@ import { useState } from "react"
 import { close, logo, menu, avatar } from '../../assets'
 import { motion } from 'framer-motion'
 import { MdShoppingCart, MdSettings, MdLogout, MdAdd } from 'react-icons/md'
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { app } from '../../services/firebase-config'
 import { navLinks } from '../index'
 import { Link, useLocation } from 'react-router-dom'
 import { actionType } from '../../context/reducer'
@@ -13,6 +15,21 @@ const Navbar = () => {
 
   const [toggle, setToggle] = useState(false)
   const [isMenu, setIsMenu] = useState(false)
+
+  // Google Auth
+  const firebaseAuth = getAuth(app)
+  const provider = new GoogleAuthProvider()
+
+  const login = async () => {
+    if(localStorage.getItem('user') !== "undefined" || localStorage.getItem('user') === "[]"){
+      const response = await signInWithPopup(firebaseAuth, provider)
+      console.log(response)
+      setIsMenu(!isMenu)
+    }
+    else{
+      setIsMenu(false)
+    }
+  }
 
   //For Cart
   const [{ cartShow, cartItems }, dispatch] = useStateValue()
@@ -80,15 +97,7 @@ const Navbar = () => {
               
       {/* ===== Profile Icon ======= */} 
               <li>
-                  <img src={users ? users.photoURL : avatar} onClick={ () => 
-                        {
-                          if(localStorage.getItem('user') !== "undefined" || localStorage.getItem('user') === "[]"){
-                            setIsMenu(!isMenu)
-                          }
-                          else{
-                            setIsMenu(false)
-                          }
-                        }
+                  <img src={users ? users.photoURL : avatar} onClick={ login
                       }
                     className="w-[25px] h-[25px] cursor-pointer rounded-full {`${styles.avatar}`}" whiletap={{ scale: 0.6 }}/>
                   { 
@@ -100,14 +109,14 @@ const Navbar = () => {
                         className='p-3 bg-black-gradient text-white text-[12px] absolute top-15 right-10 mx-1 my-2 min-w-[110px] rounded-xl'>
 
         {/* For Admin */}
-                          {users && users.email === "it21096266@my.sliit.lk" && (
+                          {/* {users && users.email === "it21096266@my.sliit.lk" && (
                             <Link to="/onlineItemList">
                                 <p onClick={() => setIsMenu(false)}
                                  className='px-4 py-2 flex items-center gap-1 cursor-pointer hover: text-dimWhite transition-all duration-100 ease-in-out'>
                                   Add Items <MdAdd />
                                 </p>
                             </Link>
-                            )}
+                            )} */}
         {/* For All */}
                             <Link to="/home">
                               <p onClick={() => setIsMenu(false)}
